@@ -6,13 +6,9 @@ from django.contrib.auth.models import User
 
 class QuestionManager(models.Manager):
 	def new(self):
-		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM Question ORDER BY added_at DESC")
-		return cursor.fetchall()
+		return self.order_by("-added_at")
 	def popular(self):
-		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM Question ORDER BY rating DESC")
-		return cursor.fetchall()
+		return self.order_by("-rating")
 
 class Question(models.Model):
 	title = models.CharField(max_length=255)
@@ -24,7 +20,7 @@ class Question(models.Model):
 	objects = QuestionManager()
 	def __unicode__(self):
 		return self.title
-        class Meta:
+    class Meta:
 		db_table = "Question"
 	
 class Answer(models.Model):
@@ -35,5 +31,5 @@ class Answer(models.Model):
 	def __unicode__(self):
 		return self.title
 	class Meta:
-                db_table = "Answer"
+        db_table = "Answer"
 	

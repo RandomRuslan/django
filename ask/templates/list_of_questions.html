@@ -1,22 +1,23 @@
 <!DOCTYPE HTML>
 
 <html>
-<head></head>
+<head>List of questions</head><br>
 <body>
+<ul>
+{% for item in page.object_list %}
+    <li>{{item.title}} <a href="/question/{{item.id}}/">show question</a></li>
+{%endfor%}
+</ul>
 
-<ul class="pagination">
-{% for p in paginator.page_rage %}
-    {% if p.number == page.number %} 
-        {% for item in page.object_list %}
-            <li class="active">
-                {{item.title}} <br>
-                <a href="localhost:8000/question/{{item.id}}/">show question</a>  
-        {%endfor%}
+<nav><ul class="pagination">
+{% for p in paginator.page_range %}
+    {% if p == page.number %} 
+        <li class="active">
     {% else %}
         <li>
     {% endif %}
-        <a href = "{{paginator.baseurl}}{{p.number}}">{{p.number}}</a>
+        <a href = "{{paginator.baseurl}}{{p}}">{{p}}</a>
         </li>
 {%endfor%}
 </body>
-</html>
+</html></nav>

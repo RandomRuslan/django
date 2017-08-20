@@ -16,12 +16,11 @@ def test(request, *args, **kwargs):
 def mainpage(request):
     post = Question.objects.new()
     page = request.GET.get('page', 1)
-
     paginator = Paginator(post, 10)
     page = paginator.page(page)
     paginator.baseurl = "/?page="
     return render(request, 'templates/list_of_questions.html', {
-        'post' : post,
+        'post' : page.object_list,
         'paginator' : paginator,
         'page' : page,
     })
@@ -34,7 +33,7 @@ def populars(request):
     page = paginator.page(page)
     paginator.baseurl = "/popular/?page="
     return render(request, 'templates/list_of_questions.html', {
-        'post' : post,
+        'post' : page.object_list,
         'paginator' : paginator,
         'page' : page,
     })
