@@ -5,3 +5,5 @@ sudo pip3 install --upgrade django
 sudo pip3 install --upgrade gunicorn
 sudo pip3 install --upgrade mysqlclient
 sudo pip3 install pymysql
+sudo pip3 install pymysql
+

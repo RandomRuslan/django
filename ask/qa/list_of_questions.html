@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+
+<html>
+<head></head>
+<body>
+
+<ul class="pagination">
+{% for p in paginator.page_rage %}
+    {% if p.number == page.number %} 
+        {% for item in page.object_list %}
+            <li class="active">
+                {{item.objects.__unicode__}} <br>
+                <a href="localhost:8000/question/{{item.id}}/">show question</a>  
+        {%endfor%}
+    {% else %}
+        <li>
+    {% endif %}
+        <a href = "{{paginator.baseurl}}{{p.number}}">{{p.number}}</a>
+        </li>
+{%endfor%}
+</body>
+</html>

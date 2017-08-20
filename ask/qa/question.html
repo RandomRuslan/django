@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+
+<html>
+<head></head>
+<body>
+{% for item in post %}
+    {{item.objects.__unicode__}} <br>
+    {{item.text}} <br>
+    {% for answer in post.answer_set.all %}
+        {{answer.text}} <br>
+    {% endfor %}
+{% endfor %}
+</body>
+</html>
