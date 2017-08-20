@@ -9,7 +9,7 @@
     {% if p.number == page.number %} 
         {% for item in page.object_list %}
             <li class="active">
-                {{item.objects.__unicode__}} <br>
+                {{item.title}} <br>
                 <a href="localhost:8000/question/{{item.id}}/">show question</a>  
         {%endfor%}
     {% else %}

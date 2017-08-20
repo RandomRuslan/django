@@ -24,6 +24,8 @@ class Question(models.Model):
 	objects = QuestionManager()
 	def __unicode__(self):
 		return self.title
+        class Meta:
+		db_table = "Question"
 	
 class Answer(models.Model):
 	text =  models.TextField()
@@ -32,4 +34,6 @@ class Answer(models.Model):
 	author = models.OneToOneField(User)
 	def __unicode__(self):
 		return self.title
+	class Meta:
+                db_table = "Answer"
 	
