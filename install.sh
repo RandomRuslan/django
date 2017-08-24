@@ -7,3 +7,5 @@ sudo pip3 install --upgrade mysqlclient
 sudo pip3 install pymysql
 sudo pip install pymysql
 sudo apt-get install lynx
+
+sudo mv ask/ask/notsettings.py ask/ask/settings.py

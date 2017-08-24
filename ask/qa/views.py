@@ -5,7 +5,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
-from qa.models import *
+from qa.models import Answer, Question
+from forms import AskForm, AnswerForm
 from django.contrib.auth.models import User
 import random
 
