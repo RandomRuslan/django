@@ -6,3 +6,4 @@ sudo pip3 install --upgrade gunicorn
 sudo pip3 install --upgrade mysqlclient
 sudo pip3 install pymysql
 sudo pip install pymysql
+sudo apt-get install lynx

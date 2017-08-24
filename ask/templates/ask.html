@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>Ask a question</head>
+<br>
+<body>
+    <form action="/ask/" method="post">
+        {% csrf_token %}
+        {{form.as_ul}}
+        <input type="submit" value="Ask">
+    </form>
+</body>
+</html>

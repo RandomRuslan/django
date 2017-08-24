@@ -3,10 +3,20 @@
 <html>
 <head>Question</head>
 <body>
-    {{post.title}} <br>
-    {{post.text}} <br>
-    {% for answer in post.answer_set.all %}
-        {{answer.text}} <br>
+    {{question.title}} <br>
+    {{question.text}} <br><br>
+    Answers:
+    <ol>
+    {% for answer in question.answer_set.all %}
+        <li>{{answer.text}}</li>
     {% endfor %}
+    </ol>
+    <br>
+    <form action="/question/{{question.id}}/" method="post">
+        {% csrf_token %}
+        Give your answer: 
+        <input type="text" name="text"><br>
+        <input type="submit" value="Add answer"> 
+    </form>
 </body>
 </html>
