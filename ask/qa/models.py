@@ -21,7 +21,6 @@ class Question(models.Model):
 		return self.title
 	class Meta:
 		db_table = "Question"
-	
 
 class Answer(models.Model):
 	text =  models.TextField()
@@ -32,4 +31,14 @@ class Answer(models.Model):
 		return self.text
 	class Meta:
 		db_table = "Answer"
+
+
+"""
+class UserQA(models.Model):
+    username = models.CharField(max_length=255, unique=True)
+    email = models.CharField(max_length=255, unique=True, null=True)
+    password = models.CharField(max_length=255)
+    class Meta:
+		db_table = "UserQA"
+"""
 

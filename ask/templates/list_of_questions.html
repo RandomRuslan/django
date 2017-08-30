@@ -3,11 +3,11 @@
 <html>
 <head>List of questions</head><br>
 <body>
-<ul>
+<ol>
 {% for item in page.object_list %}
-    <li>{{item.title}} <a href="/question/{{item.id}}/">show question</a></li>
+    <li> <a href="/question/{{item.id}}/">{{item.title}}</a></li>
 {%endfor%}
-</ul>
+</ol>
 
 <nav><ul class="pagination">
 {% for p in paginator.page_range %}
@@ -19,5 +19,6 @@
         <a href = "{{paginator.baseurl}}{{p}}">{{p}}</a>
         </li>
 {%endfor%}
+</ul></nav>
 </body>
-</html></nav>
+</html>

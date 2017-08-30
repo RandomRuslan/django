@@ -6,6 +6,7 @@
 <body>
     <form action="/ask/" method="post">
         {% csrf_token %}
+        {{error}}
         {{form.as_ul}}
         <input type="submit" value="Ask">
     </form>

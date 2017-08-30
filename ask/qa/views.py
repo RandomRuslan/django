@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import Http404
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
-from qa.models import Answer, Question
-from forms import AskForm, AnswerForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from qa.models import Answer, Question
+from qa.forms import AnswerForm, AskForm, UserForm
 import random
 
 def test(request, *args, **kwargs):
@@ -45,25 +45,60 @@ def show_question(request, id):
         question = Question.objects.get(id=id)
     except:
         raise Http404
+    error = ''
     if request.method == "POST":
         form = AnswerForm({"text" : request.POST["text"], "question" : id})
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("/question/%d/" % id)
+            if request.user.is_authenticated():
+                form.cleaned_data["author"] = user
+                form.save()
+                return HttpResponseRedirect("/question/%d/" % id)
+            else:
+                error = "You must be authenticated\n"
+                return render(request, "templates/login.html", {'error' : error})
     else:
         form = AnswerForm()
     return render(request, "templates/question.html", {'question' : question, 'form' : form})
 
 def ask(request):
+    error = ''
     if request.method == "POST":
         form = AskForm(request.POST)
         if form.is_valid():
-            question = form.save()
-            return HttpResponseRedirect("/question/%d" % question.id)
+            if request.user.is_authenticated():
+                form.cleaned_data["author"] = user
+                question = form.save()
+                return HttpResponseRedirect("/question/%d" % question.id)
+            else:
+                error = "You must be authenticated\n"
+                return render(request, "templates/login.html", {'error' : error})
     else:
         form = AskForm()
     return render(request, "templates/ask.html", {'form' : form})
 
+def signup(request):
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect("/")
+    else:
+        form = UserForm()
+    return render(request, "templates/signup.html", {'form' : form})
+
+def login(request):
+    error = ''
+    if request.method == "POST":
+        user = authenticate(username=request.POST["username"], password=request.POST["password"])
+        if user is not None:
+                login(request, user)
+                return HttpResponseRedirect("/")
+        else:
+            error = "Incorrect username/password\n"
+
+    return render(request, "templates/login.html", {'error' : error})
+    
 def create(request):
     try:
         user = User.objects.create(username="Ruslan", password="password")
@@ -76,4 +111,4 @@ def create(request):
             rating = random.randint(1,100),
             author = user
         )
-    return HttpResponse('Question was added')
+    return HttpResponse('Questions was added')
