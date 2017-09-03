@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from qa.models import Answer, Question
 from qa.forms import AnswerForm, AskForm, UserForm
 import random
@@ -50,11 +50,11 @@ def show_question(request, id):
         form = AnswerForm({"text" : request.POST["text"], "question" : id})
         if form.is_valid():
             if request.user.is_authenticated():
-                form.cleaned_data["author"] = user
+                form.cleaned_data["author"] = request.user
                 form.save()
                 return HttpResponseRedirect("/question/%d/" % id)
             else:
-                error = "You must be authenticated\n"
+                error = "You must be authenticated"
                 return render(request, "templates/login.html", {'error' : error})
     else:
         form = AnswerForm()
@@ -66,11 +66,11 @@ def ask(request):
         form = AskForm(request.POST)
         if form.is_valid():
             if request.user.is_authenticated():
-                form.cleaned_data["author"] = user
+                form.cleaned_data["author"] = request.user
                 question = form.save()
                 return HttpResponseRedirect("/question/%d" % question.id)
             else:
-                error = "You must be authenticated\n"
+                error = "You must be authenticated"
                 return render(request, "templates/login.html", {'error' : error})
     else:
         form = AskForm()
@@ -87,7 +87,7 @@ def signup(request):
         form = UserForm()
     return render(request, "templates/signup.html", {'form' : form})
 
-def login(request):
+def login_user(request):
     error = ''
     if request.method == "POST":
         user = authenticate(username=request.POST["username"], password=request.POST["password"])
@@ -95,9 +95,13 @@ def login(request):
                 login(request, user)
                 return HttpResponseRedirect("/")
         else:
-            error = "Incorrect username/password\n"
+            error = "Incorrect username/password"
 
     return render(request, "templates/login.html", {'error' : error})
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect("/")
     
 def create(request):
     try:

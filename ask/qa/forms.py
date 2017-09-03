@@ -15,8 +15,10 @@ class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
     question = forms.IntegerField()
     def save(self):
-        self.cleaned_data["question_id"] = self.cleaned_data["question"]
-        return Answer.objects.create(**self.cleaned_data)
+        #params = dict(self.cleaned_data)
+        params = {"text" : self.cleaned_data["text"], "author" : self.cleaned_data["author"]}
+        params["question_id"] = self.cleaned_data["question"]
+        return Answer.objects.create(**params)
 
 class UserForm(forms.Form):
     username = forms.CharField(max_length=255)

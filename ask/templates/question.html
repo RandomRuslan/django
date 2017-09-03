@@ -14,7 +14,7 @@
     <br>
     <form action="/question/{{question.id}}/" method="post">
         {% csrf_token %}
-        {{error}}
+        <p>{{error}}</p>
         Give your answer: 
         <input type="text" name="text"><br>
         <input type="submit" value="Add answer"> 
