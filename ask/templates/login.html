@@ -1,14 +1,18 @@
 <!DOCTYPE HTML>
 
 <html>
-<head>Log in</head>
+<head>
+    {% load staticfiles %}
+    <link href="/home/box/web/ask/static/qa/css/style.css" rel="stylesheet" />    
+    Log in
+</head>
 <body>
-    <form action="/login/" method="post">
+    <div class="form"><form action="/login/" method="post">
         {% csrf_token %}
-        <p>{{error}}</p>
+        <div class="error">{{error}}</div>
         Username: <input type="text" name="username"><br>
         Password: <input type="password" name="password"><br>
         <input type="submit" value="Enter"> 
-    </form>
+    </form></div>
 </body>
 </html>

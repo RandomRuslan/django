@@ -1,24 +1,27 @@
 <!DOCTYPE HTML>
 
 <html>
-<head>List of questions</head><br>
+<head>
+    <link href="style.css" rel="stylesheet">
+    List of questions
+</head><br>
 <body>
-<ol>
-{% for item in page.object_list %}
-    <li> <a href="/question/{{item.id}}/">{{item.title}}</a></li>
-{%endfor%}
-</ol>
+    <div class="questions"><ol>
+        {% for item in page.object_list %}
+            <li> <a href="/question/{{item.id}}/">{{item.title}}</a></li>
+        {%endfor%}
+    </ol></div>
 
-<nav><ul class="pagination">
-{% for p in paginator.page_range %}
-    {% if p == page.number %} 
-        <li class="active">
-    {% else %}
-        <li>
-    {% endif %}
-        <a href = "{{paginator.baseurl}}{{p}}">{{p}}</a>
-        </li>
-{%endfor%}
-</ul></nav>
+    <div class="pagination"><ul class="pagination">
+        {% for p in paginator.page_range %}
+            {% if p == page.number %} 
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                <a href = "{{paginator.baseurl}}{{p}}">{{p}}</a>
+                </li>
+        {%endfor%}
+    </ul></div>     
 </body>
 </html>

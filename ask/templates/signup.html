@@ -1,12 +1,16 @@
 <!DOCTYPE HTML>
 
 <html>
-<head>Registration</head>
+<head>
+    <link href="style.css" rel="stylesheet">
+    Registration
+</head>
 <body>
-    <form action="/signup/" method="post">
+    <div class="form"><form action="/signup/" method="post">
         {% csrf_token %}
+        {{error}}
         {{form.as_ul}}
         <input type="submit" value="Sign up">
-    </form>
+    </form></div>
 </body>
 </html>

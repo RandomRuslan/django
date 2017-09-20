@@ -1,23 +1,31 @@
 <!DOCTYPE HTML>
 
 <html>
-<head>Question</head>
+<head>
+    <link href="style.css" rel="stylesheet">
+    Question
+</head>
 <body>
-    {{question.title}} <br>
-    {{question.text}} <br><br>
-    Answers:
-    <ol>
-    {% for answer in question.answer_set.all %}
-        <li>{{answer.text}}</li>
-    {% endfor %}
-    </ol>
+    <div class="question">
+        {{question.title}} <br>
+        {{question.text}}
+    </div>
+    <div class="answers">
+        Answers:
+        <ol>
+        {% for answer in question.answer_set.all %}
+            <li>{{answer.text}}</li>
+        {% endfor %}
+        </ol>
+    </div>
     <br>
-    <form action="/question/{{question.id}}/" method="post">
+    
+    <div class="form"><form action="/question/{{question.id}}/" method="post">
         {% csrf_token %}
-        <p>{{error}}</p>
+        <div class="error">{{error}}</div>
         Give your answer: 
         <input type="text" name="text"><br>
         <input type="submit" value="Add answer"> 
-    </form>
+    </form></div>
 </body>
 </html>

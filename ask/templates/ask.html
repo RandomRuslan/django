@@ -1,14 +1,18 @@
 <!DOCTYPE HTML>
 
 <html>
-<head>Ask a question</head>
+<head>
+    <link href="style.css" rel="stylesheet">
+    Ask a question
+</head>
 <br>
 <body>
-    <form action="/ask/" method="post">
+    
+    <div class="form"><form action="/ask/" method="post">
         {% csrf_token %}
-        <p>{{error}}</p>
+        <div class="error">{{error}}</div>
         {{form.as_ul}}
         <input type="submit" value="Ask">
-    </form>
+    </form></div>
 </body>
 </html>

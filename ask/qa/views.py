@@ -20,7 +20,7 @@ def show_mainpage(request):
     paginator = Paginator(question, 10)
     page = paginator.page(page)
     paginator.baseurl = "/?page="
-    return render(request, 'templates/list_of_questions.html', {
+    return render(request, 'list_of_questions.html', {
         'question' : page.object_list,
         'paginator' : paginator,
         'page' : page,
@@ -33,7 +33,7 @@ def show_populars(request):
     paginator = Paginator(question, 10)
     page = paginator.page(page)
     paginator.baseurl = "/popular/?page="
-    return render(request, 'templates/list_of_questions.html', {
+    return render(request, 'list_of_questions.html', {
         'question' : page.object_list,
         'paginator' : paginator,
         'page' : page,
@@ -55,14 +55,13 @@ def show_question(request, id):
                 return HttpResponseRedirect("/question/%d/" % id)
             else:
                 error = "You must be authenticated"
-                return render(request, "templates/login.html", {'error' : error})
-    else:
-        form = AnswerForm()
-    return render(request, "templates/question.html", {'question' : question, 'form' : form})
+                return render(request, "login.html", {'error' : error})
+    form = AnswerForm()
+    return render(request, "question.html", {'question' : question, 'form' : form})
 
 def ask(request):
     error = ''
-    if request.method == "POST":
+    if request.method == "POST":    
         form = AskForm(request.POST)
         if form.is_valid():
             if request.user.is_authenticated():
@@ -71,21 +70,25 @@ def ask(request):
                 return HttpResponseRedirect("/question/%d" % question.id)
             else:
                 error = "You must be authenticated"
-                return render(request, "templates/login.html", {'error' : error})
-    else:
-        form = AskForm()
-    return render(request, "templates/ask.html", {'form' : form})
+                return render(request, "login.html", {'error' : error})
+    form = AskForm()
+    return render(request, "ask.html", {'form' : form})
 
 def signup(request):
-    if request.method == "POST":
+    error = ''
+    if request.method == "POST":                
         form = UserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return HttpResponseRedirect("/")
-    else:
-        form = UserForm()
-    return render(request, "templates/signup.html", {'form' : form})
+            try:
+                user = User.objects.get(username=request.POST.get("username"))
+            except User.DoesNotExist:
+                user = form.save()
+                login(request, user)
+                return HttpResponseRedirect("/")
+            else:
+                error = "This name is reserved"
+    form = UserForm()
+    return render(request, "signup.html", {'form' : form, 'error' : error})
 
 def login_user(request):
     error = ''
@@ -97,7 +100,8 @@ def login_user(request):
         else:
             error = "Incorrect username/password"
 
-    return render(request, "templates/login.html", {'error' : error})
+    return render(
+request, "login.html", {'error' : error})
 
 def logout_user(request):
     logout(request)

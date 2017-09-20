@@ -32,13 +32,3 @@ class Answer(models.Model):
 	class Meta:
 		db_table = "Answer"
 
-
-"""
-class UserQA(models.Model):
-    username = models.CharField(max_length=255, unique=True)
-    email = models.CharField(max_length=255, unique=True, null=True)
-    password = models.CharField(max_length=255)
-    class Meta:
-		db_table = "UserQA"
-"""
-
