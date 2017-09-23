@@ -5,12 +5,13 @@
     <link href="style.css" rel="stylesheet">
     Registration
 </head>
-<body>
+<body><center>
+    <div name="title"></div>
     <div class="form"><form action="/signup/" method="post">
         {% csrf_token %}
         {{error}}
         {{form.as_ul}}
         <input type="submit" value="Sign up">
     </form></div>
-</body>
+</center></body>
 </html>

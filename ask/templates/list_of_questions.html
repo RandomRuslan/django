@@ -2,10 +2,10 @@
 
 <html>
 <head>
-    <link href="style.css" rel="stylesheet">
-    List of questions
+    <link href="style.css" rel="stylesheet">    
 </head><br>
-<body>
+<body><center>
+    <div class="title">List of questions</div>
     <div class="questions"><ol>
         {% for item in page.object_list %}
             <li> <a href="/question/{{item.id}}/">{{item.title}}</a></li>
@@ -23,5 +23,5 @@
                 </li>
         {%endfor%}
     </ul></div>     
-</body>
+</center></body>
 </html>

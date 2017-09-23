@@ -25,4 +25,4 @@ class UserForm(forms.Form):
     email = forms.CharField(max_length=255)
     password = forms.CharField(max_length=255)
     def save(self):
-        return User.objects.create(**self.cleaned_data)
+        return User.objects.create_user(**self.cleaned_data)

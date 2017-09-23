@@ -2,17 +2,16 @@
 
 <html>
 <head>
-    <link href="style.css" rel="stylesheet">
-    Ask a question
+    <link href="style.css" rel="stylesheet">    
 </head>
 <br>
-<body>
-    
+<body><center>    
+    <div class="title">Ask a question</div>
     <div class="form"><form action="/ask/" method="post">
         {% csrf_token %}
         <div class="error">{{error}}</div>
         {{form.as_ul}}
         <input type="submit" value="Ask">
     </form></div>
-</body>
+</center></body>
 </html>

@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout, authenticate
 from qa.models import Answer, Question
 from qa.forms import AnswerForm, AskForm, UserForm
 import random
@@ -76,7 +76,7 @@ def ask(request):
 
 def signup(request):
     error = ''
-    if request.method == "POST":                
+    if request.method == "POST":             
         form = UserForm(request.POST)
         if form.is_valid():
             try:
@@ -94,14 +94,14 @@ def login_user(request):
     error = ''
     if request.method == "POST":
         user = authenticate(username=request.POST["username"], password=request.POST["password"])
+        #user = authenticate(**request.POST)
         if user is not None:
-                login(request, user)
-                return HttpResponseRedirect("/")
+            login(request, user)
+            return HttpResponseRedirect("/")
         else:
             error = "Incorrect username/password"
 
-    return render(
-request, "login.html", {'error' : error})
+    return render(request, "login.html", {'error' : error})
 
 def logout_user(request):
     logout(request)

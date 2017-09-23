@@ -3,10 +3,10 @@
 <html>
 <head>
     {% load staticfiles %}
-    <link href="/home/box/web/ask/static/qa/css/style.css" rel="stylesheet" />    
-    Log in
+    <link href="/home/box/web/ask/static/qa/css/style.css" rel="stylesheet" />        
 </head>
-<body>
+<body><center>
+    <div class="title">Log in</div>
     <div class="form"><form action="/login/" method="post">
         {% csrf_token %}
         <div class="error">{{error}}</div>
@@ -14,5 +14,5 @@
         Password: <input type="password" name="password"><br>
         <input type="submit" value="Enter"> 
     </form></div>
-</body>
+</center></body>
 </html>
